@@ -77,16 +77,41 @@ Tools used:
 3. A **public subnet** needs an **Internet Gateway** to reach the internet.
 4. Always plan IP space before building — avoid running out of IPs later.
 
+
+
 flowchart TD
-    A[Loading URL failed. We can try to figure out why.] -->|Decode JSON| B(Please check the console to see the JSON and error details.)
-    B --> C{Is the JSON correct?}
-    C -->|Yes| D(Please Click here to Raise an issue in github.<br/>Including the broken link in the issue <br/> will speed up the fix.)
-    C -->|No| E{Did someone <br/>send you this link?}
-    E -->|Yes| F[Ask them to send <br/>you the complete link]
-    E -->|No| G{Did you copy <br/> the complete URL?}
-    G --> |Yes| D
-    G --> |"No :("| H(Try using the Timeline tab in History <br/>from same browser you used to create the diagram.)
-    click D href "https://github.com/mermaid-js/mermaid-live-editor/issues/new?assignees=&labels=bug&template=bug_report.md&title=Broken%20link" "Raise issue"
+    Start([Start VPC Creation]):::start --> Search[Search for VPC in AWS Console]:::action
+    Search --> Dashboard[Open VPC Dashboard]:::action
+    Dashboard --> LaunchWizard[Click Launch VPC Wizard]:::action
+    LaunchWizard --> SelectConfig[Select 'VPC with Single Public Subnet']:::decision
+    SelectConfig --> Configure
+    
+    subgraph Configure [Configuration Settings]
+        VPC_CIDR[VPC IPv4 CIDR: 192.168.0.0/18]:::setting
+        No_IPv6[IPv6 CIDR Block: None]:::setting
+        VPC_Name[VPC Name: First VPC]:::setting
+        Subnet_CIDR[Public Subnet CIDR: 192.168.1.0/26]:::setting
+        AZ[Availability Zone: No Preference]:::setting
+        Subnet_Name[Subnet Name: Public Subnet]:::setting
+    end
+    
+    Configure --> Create[Click Create VPC]:::action
+    Create --> Success{VPC Creation Successful?}:::decision
+    
+    Success -- Yes --> Verify[Verify VPC in 'Your VPCs' list]:::action
+    Success -- No --> Troubleshoot[Troubleshoot CIDR Issues]:::action
+    
+    Verify --> Complete([VPC Setup Complete]):::success
+    
+    Troubleshoot --> CheckCIDR[Check for CIDR overlaps]:::action
+    CheckCIDR --> Adjust[Adjust CIDR blocks if needed]:::action
+    Adjust --> Create
+
+    classDef start fill:#2c3e50,stroke:#34495e,stroke-width:2px,color:#ecf0f1;
+    classDef action fill:#3498db,stroke:#2980b9,stroke-width:1px,color:#fff;
+    classDef decision fill:#e67e22,stroke:#d35400,stroke-width:1px,color:#fff;
+    classDef setting fill:#27ae60,stroke:#229954,stroke-width:1px,color:#fff;
+    classDef success fill:#2ecc71,stroke:#27ae60,stroke-width:2px,color:#2c3e50;
 
 
 
