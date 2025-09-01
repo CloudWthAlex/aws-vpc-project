@@ -1,4 +1,34 @@
-## 🎨 AWS VPC Creation Workflow (Colored)
+# 🌐 AWS VPC Creation Project
+
+This project documents my hands-on practice in **creating a custom Amazon VPC** with a single public subnet as part of my **#200DaysOfCloudEngineer** journey.  
+
+It covers the full workflow from **launching the VPC wizard** to **verifying the configuration** and handling troubleshooting steps.
+
+---
+
+## 📌 Project Overview
+
+- **Cloud Provider**: AWS  
+- **Service Used**: Amazon VPC  
+- **Objective**: Create a Virtual Private Cloud with one public subnet.  
+- **Outcome**: Successfully launched and verified a working VPC environment.  
+
+---
+
+## ⚙️ Configuration Details
+
+| Setting                  | Value                |
+|---------------------------|----------------------|
+| VPC IPv4 CIDR Block      | `192.168.0.0/18`    |
+| IPv6 CIDR Block          | None                |
+| VPC Name                 | `First VPC`         |
+| Public Subnet CIDR       | `192.168.1.0/26`    |
+| Availability Zone        | No Preference       |
+| Subnet Name              | `Public Subnet`     |
+
+---
+
+## 📖 Step-by-Step Workflow
 
 ```mermaid
 flowchart TD
