@@ -77,60 +77,37 @@ Tools used:
 3. A **public subnet** needs an **Internet Gateway** to reach the internet.
 4. Always plan IP space before building — avoid running out of IPs later.
 
-%%{init: {'theme': 'base', 'themeVariables': {
-  'primaryColor': '#4a86e8',
-  'edgeLabelBackground': '#ffffff',
-  'tertiaryColor': '#f0f9ff',
-  'textColor': '#333'
-}}}%%
-
 flowchart TD
-    classDef success fill:#d4edda,stroke:#155724,color:#155724;
-    classDef error fill:#f8d7da,stroke:#721c24,color:#721c24;
-    classDef action fill:#4a86e8,stroke:#1f4f9c,color:#fff;
-    classDef decision fill:#ffeaa7,stroke:#9c7b0e,color:#333;
-    classDef startEnd fill:#a8d08d,stroke:#3c763d,color:#fff;
-
-
-    Start([🌐 Start VPC Creation]):::startEnd --> Search
-    Search[🔍 Search for 'VPC' in AWS Console]:::action
-    Search --> Dashboard[📊 Open VPC Dashboard]:::action
-    Dashboard --> LaunchWizard[🚀 Click 'Launch VPC Wizard']:::action
-    LaunchWizard --> SelectConfig[📋 Select: 'VPC with Single Public Subnet']:::action
+    Start([Start VPC Creation]) --> Search[Search for VPC in AWS Console]
+    Search --> Dashboard[Open VPC Dashboard]
+    Dashboard --> LaunchWizard[Click Launch VPC Wizard]
+    LaunchWizard --> SelectConfig[Select 'VPC with Single Public Subnet']
     SelectConfig --> Configure
-
-    subgraph Configure [⚙️ Configuration Settings]
-        direction TB
+    
+    subgraph Configure [Configuration Settings]
         VPC_CIDR[VPC IPv4 CIDR: 192.168.0.0/18]
         No_IPv6[IPv6 CIDR Block: None]
         VPC_Name[VPC Name: First VPC]
         Subnet_CIDR[Public Subnet CIDR: 192.168.1.0/26]
         AZ[Availability Zone: No Preference]
         Subnet_Name[Subnet Name: Public Subnet]
-
-        style VPC_CIDR fill:#e0f2ff,stroke:#4a86e8
-        style Subnet_CIDR fill:#e0f2ff,stroke:#4a86e8
-        style VPC_Name fill:#d9ead3,stroke:#38761d
-        style Subnet_Name fill:#d9ead3,stroke:#38761d
     end
-
-    Configure --> Create[✅ Click 'Create VPC']:::action
-    Create --> Success{✅ VPC Creation Successful?}
     
-    Success -- Yes --> Verify[🔍 Verify VPC in 'Your VPCs' List]:::success
-    Success -- No --> Troubleshoot[❌ Troubleshoot CIDR Issues]:::error
-
-    Verify --> Complete([🎉 VPC Setup Complete]):::startEnd
-
-    Troubleshoot --> CheckCIDR[🔎 Check for CIDR Overlaps]
-    CheckCIDR --> Adjust[🔧 Adjust CIDR Blocks if Needed]
+    Configure --> Create[Click Create VPC]
+    Create --> Success{VPC Creation Successful?}
+    
+    Success -- Yes --> Verify[Verify VPC in 'Your VPCs' list]
+    Success -- No --> Troubleshoot[Troubleshoot CIDR Issues]
+    
+    Verify --> Complete([VPC Setup Complete])
+    
+    Troubleshoot --> CheckCIDR[Check for CIDR overlaps]
+    CheckCIDR --> Adjust[Adjust CIDR blocks if needed]
     Adjust --> Create
 
-    class Verify,Complete success
-    class Troubleshoot,CheckCIDR,Adjust error
+   
 
-
-
+   
 
 
 
